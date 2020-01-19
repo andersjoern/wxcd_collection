@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="wxcd_collection" />
+		<Option pch_mode="2" />
+		<Option compiler="clang" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/wxcd_collection" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/wxcd_collection" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="clang" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fno-PIC" />
+			<Add option="`wx-config --cflags`" />
+		</Compiler>
+		<Linker>
+			<Add option="-no-pie" />
+			<Add option="`wx-config --libs`" />
+			<Add option="`sdl2-config --libs`" />
+		</Linker>
+		<Unit filename="EditArtist.cpp" />
+		<Unit filename="EditArtist.h" />
+		<Unit filename="EditCDDialog.cpp" />
+		<Unit filename="EditCDDialog.h" />
+		<Unit filename="EditTrack.cpp" />
+		<Unit filename="EditTrack.h" />
+		<Unit filename="EditTypeOfMusic.cpp" />
+		<Unit filename="EditTypeOfMusic.h" />
+		<Unit filename="PlayTheMusic.cpp" />
+		<Unit filename="PlayTheMusic.h" />
+		<Unit filename="SelectTrack.cpp" />
+		<Unit filename="SelectTrack.h" />
+		<Unit filename="artist.cpp" />
+		<Unit filename="artist.h" />
+		<Unit filename="btfile.cpp" />
+		<Unit filename="btfile.h" />
+		<Unit filename="btree.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="btree.h" />
+		<Unit filename="cdrec.cpp" />
+		<Unit filename="cdrec.h" />
+		<Unit filename="cdrectrack.cpp" />
+		<Unit filename="cdrectrack.h" />
+		<Unit filename="cdtrack.cpp" />
+		<Unit filename="cdtrack.h" />
+		<Unit filename="datafactory.cpp" />
+		<Unit filename="datafactory.h" />
+		<Unit filename="tomus.cpp" />
+		<Unit filename="tomus.h" />
+		<Unit filename="wxcd_collectionApp.cpp" />
+		<Unit filename="wxcd_collectionApp.h" />
+		<Unit filename="wxcd_collectionMain.cpp" />
+		<Unit filename="wxcd_collectionMain.h" />
+		<Unit filename="wxsmith/EditArtist.wxs" />
+		<Unit filename="wxsmith/EditCDDialog.wxs" />
+		<Unit filename="wxsmith/EditTrack.wxs" />
+		<Unit filename="wxsmith/EditTypeOfMusic.wxs" />
+		<Unit filename="wxsmith/SelectTrack.wxs" />
+		<Unit filename="wxsmith/wxcd_collectionframe.wxs" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="wxcd_collectionApp.cpp" main="wxcd_collectionFrame" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxFrame wxs="wxsmith/wxcd_collectionframe.wxs" src="wxcd_collectionMain.cpp" hdr="wxcd_collectionMain.h" fwddecl="0" i18n="1" name="wxcd_collectionFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/EditCDDialog.wxs" src="EditCDDialog.cpp" hdr="EditCDDialog.h" fwddecl="0" i18n="1" name="EditCDDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/SelectTrack.wxs" src="SelectTrack.cpp" hdr="SelectTrack.h" fwddecl="0" i18n="1" name="SelectTrack" language="CPP" />
+					<wxDialog wxs="wxsmith/EditTrack.wxs" src="EditTrack.cpp" hdr="EditTrack.h" fwddecl="0" i18n="1" name="EditTrack" language="CPP" />
+					<wxDialog wxs="wxsmith/EditArtist.wxs" src="EditArtist.cpp" hdr="EditArtist.h" fwddecl="0" i18n="1" name="EditArtist" language="CPP" />
+					<wxDialog wxs="wxsmith/EditTypeOfMusic.wxs" src="EditTypeOfMusic.cpp" hdr="EditTypeOfMusic.h" fwddecl="0" i18n="1" name="EditTypeOfMusic" language="CPP" />
+				</resources>
+			</wxsmith>
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

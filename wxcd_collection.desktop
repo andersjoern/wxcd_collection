@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Collection of Music CD's
+Comment=Collection of Music application
+Exec=wxcd_collection
+Icon=/home/anders/bin/classicmusic.png
+Terminal=false
