@@ -21,7 +21,6 @@ DataFactory::DataFactory()
 {
 	const char *homedir;
     struct stat buffer;
-    int res = 0;
 
 	InitDB(ReportDbError);
 
@@ -32,12 +31,12 @@ DataFactory::DataFactory()
 	std::string s = std::string(homedir) + std::string(directory1);
 	if (stat (s.c_str(), &buffer) != 0)
     {
-        res = mkdir(s.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+        mkdir(s.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     }
     s += std::string(directory2);
 	if (stat (s.c_str(), &buffer) != 0)
     {
-        res = mkdir(s.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+        mkdir(s.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     }
 }
 

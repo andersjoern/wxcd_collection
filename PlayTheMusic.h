@@ -13,16 +13,25 @@ struct AudioData
 class PlayTheMusic
 {
     public:
-        PlayTheMusic();
+
         virtual ~PlayTheMusic();
 
         bool Play(const char *path);
+        void Stop();
 
         std::string GetError() {return sError;}
+
+        static PlayTheMusic *Instance();
+        static void DestroyInstance();
 
     protected:
         std::string sError;
     private:
+    	static PlayTheMusic *instance;
+
+    	PlayTheMusic();
+
+    	bool playing;
 
     static void AudioCallback(void *userdata, Uint8 *stream, int streamLength);
 

@@ -5,6 +5,7 @@
 		<icon>/home/anders/cprogr/wxcd_collection/classicmusic.png</icon>
 		<size>872,450</size>
 		<id_arg>0</id_arg>
+		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxNotebook" name="ID_NOTEBOOK1" variable="Notebook1" member="yes">
 			<pos>32,16</pos>
 			<size>328,18</size>

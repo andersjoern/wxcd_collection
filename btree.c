@@ -461,7 +461,7 @@ static BTREE_BOOL PushDown(DbFPtr db, int32_t Ref, DATAREC *data, DATAREC *promo
 {
     PAGEPTR        page,  newpage;
     BTREE_BOOL     found, promoted;
-    uint16_t       Slot;
+    uint16_t          Slot;
     static DATAREC p_b_data;
 
     if (Ref == 0)
@@ -530,11 +530,12 @@ static void InsInPage(DbFPtr db, DATAREC *data, PAGEPTR Page, uint16_t toSlot)
 static void Split(DbFPtr db, DATAREC *data, int32_t RightChild, PAGEPTR OldPage,
                   DATAREC *promotedData, PAGEPTR NewPage, uint16_t Slot)
 {
-    int      i;
+    int   i;
     uint16_t median;
+
     uint16_t minSlots;
     uint16_t order;
-    int      bytesToHandle;
+    int bytesToHandle;
 
     order = ORDER(db->RecLen);
 
@@ -656,7 +657,7 @@ BTREE_BOOL RemoveRecord(DbFPtr db, const char *record)
 static BTREE_BOOL RecDelete(DbFPtr db, DATAREC *data, int32_t Ref)
 {
     PAGEPTR    page;
-    uint16_t   pos;
+    uint16_t      pos;
     BTREE_BOOL found;
 
     if (Ref == 0)
@@ -908,7 +909,7 @@ BTREE_BOOL GetRecord(DbFPtr db, char *data)
     DATAREC    datarec;
     DATAREC    *dr;
     BTREE_BOOL found;
-    uint16_t   slot;
+    uint16_t      slot;
 
     if (db->Root == 0)
     {

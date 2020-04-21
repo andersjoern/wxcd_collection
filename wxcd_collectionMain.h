@@ -29,6 +29,7 @@
 #include <wx/statusbr.h>
 //*)
 
+class MusicThread;
 
 class CDTreeItemData
 {
@@ -46,11 +47,15 @@ class wxcd_collectionFrame: public wxFrame
 
         wxcd_collectionFrame(wxWindow* parent, wxWindowID id = -1);
         virtual ~wxcd_collectionFrame();
+		void Play();
 
     private:
     	EditCDDialog *editCDDialog;
     	SelectTrack  *selectTrack;
 
+    	MusicThread *musThread;
+
+		bool playing;
 
     	std::vector<wxCDRec> *CDRecs;
     	std::vector<wxCDRecTrackRec> *CDRecTrackRec;
@@ -90,6 +95,7 @@ class wxcd_collectionFrame: public wxFrame
         void OnButton1Click(wxCommandEvent& event);
         void OnbtnUpdateCDTrackClick(wxCommandEvent& event);
         void OnMenuPlaySelected(wxCommandEvent& event);
+        void OnClose(wxCloseEvent& event);
         //*)
 
         //(*Identifiers(wxcd_collectionFrame)

@@ -1,5 +1,7 @@
 #include "PlayTheMusic.h"
 
+PlayTheMusic *PlayTheMusic::instance = NULL;
+
 PlayTheMusic::PlayTheMusic()
 {
     //ctor
@@ -8,6 +10,22 @@ PlayTheMusic::PlayTheMusic()
 PlayTheMusic::~PlayTheMusic()
 {
     //dtor
+}
+
+PlayTheMusic *PlayTheMusic::Instance()
+{
+	if (instance == NULL)
+		instance = new PlayTheMusic;
+	return instance;
+}
+
+void PlayTheMusic::DestroyInstance()
+{
+	if (instance != NULL)
+	{
+		delete instance;
+		instance = NULL;
+	}
 }
 
 /** \brief
@@ -36,6 +54,7 @@ void PlayTheMusic::AudioCallback(void *userdata, Uint8 *stream, int streamLength
 bool PlayTheMusic::Play(const char *path)
 {
     sError = "";
+    playing = true;
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
     {
         sError = SDL_GetError();
@@ -68,7 +87,7 @@ bool PlayTheMusic::Play(const char *path)
 
     SDL_PauseAudioDevice(device, 0);
 
-    while (audio.length > 0)
+    while (audio.length > 0 && playing)
     {
         SDL_Delay(100);
     }
@@ -78,4 +97,10 @@ bool PlayTheMusic::Play(const char *path)
     SDL_Quit();
 
     return true;
+}
+
+void PlayTheMusic::Stop()
+{
+//	SDL_AudioQuit();
+	playing = false;
 }

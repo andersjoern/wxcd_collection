@@ -580,7 +580,7 @@
 
 1522244266 /usr/include/wx-3.0/wx/gtk/app.h
 
-1569681352 /home/anders/cprogr/wxcd_collection/wxcd_collectionMain.h
+1587487844 /home/anders/cprogr/wxcd_collection/wxcd_collectionMain.h
 	"EditCDDialog.h"
 	"SelectTrack.h"
 	"EditTrack.h"
@@ -943,7 +943,7 @@
 
 1522244266 /usr/include/wx-3.0/wx/gtk/frame.h
 
-1577798159 source:/home/anders/cprogr/wxcd_collection/wxcd_collectionMain.cpp
+1587488268 source:/home/anders/cprogr/wxcd_collection/wxcd_collectionMain.cpp
 	"wxcd_collectionMain.h"
 	"PlayTheMusic.h"
 	<wx/msgdlg.h>
@@ -1297,7 +1297,7 @@
 	"btfile.h"
 	<endian.h>
 
-1571597933 source:/home/anders/cprogr/wxcd_collection/btree.c
+1579953939 source:/home/anders/cprogr/wxcd_collection/btree.c
 	<unistd.h>
 	<sys/stat.h>
 	<errno.h>
@@ -1344,7 +1344,7 @@
 	"btfile.h"
 	<string>
 
-1577801198 source:/home/anders/cprogr/wxcd_collection/datafactory.cpp
+1587487986 source:/home/anders/cprogr/wxcd_collection/datafactory.cpp
 	"datafactory.h"
 	<wx/msgdlg.h>
 	<unistd.h>
@@ -1441,7 +1441,7 @@
 	<wx/stattext.h>
 	<wx/textctrl.h>
 
-1562497989 source:/home/anders/cprogr/wxcd_collection/EditTypeOfMusic.cpp
+1579362199 source:/home/anders/cprogr/wxcd_collection/EditTypeOfMusic.cpp
 	"EditTypeOfMusic.h"
 	"wx/valtext.h"
 	<wx/string.h>
@@ -1455,10 +1455,10 @@
 	<wx/stattext.h>
 	<wx/textctrl.h>
 
-1568570264 source:/home/anders/cprogr/wxcd_collection/PlayTheMusic.cpp
+1587486978 source:/home/anders/cprogr/wxcd_collection/PlayTheMusic.cpp
 	"PlayTheMusic.h"
 
-1563986158 /home/anders/cprogr/wxcd_collection/PlayTheMusic.h
+1586785436 /home/anders/cprogr/wxcd_collection/PlayTheMusic.h
 	<string>
 	<SDL2/SDL.h>
 

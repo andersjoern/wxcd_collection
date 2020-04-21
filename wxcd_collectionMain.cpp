@@ -14,6 +14,24 @@
 #include <sys/types.h>
 #include <pwd.h>
 
+class MusicThread : public wxThread
+{
+		wxcd_collectionFrame *handler;
+	public:
+		MusicThread(wxcd_collectionFrame *h) : wxThread(wxTHREAD_JOINABLE), handler(h)
+		{
+			Create();
+		}
+
+		void *Entry()
+		{
+			if (handler != NULL)
+			{
+				handler->Play();
+			}
+			return NULL;
+		}
+};
 
 //(*InternalHeaders(wxcd_collectionFrame)
 #include <wx/bitmap.h>
@@ -86,7 +104,7 @@ BEGIN_EVENT_TABLE(wxcd_collectionFrame,wxFrame)
     //*)
 END_EVENT_TABLE()
 
-wxcd_collectionFrame::wxcd_collectionFrame(wxWindow* parent,wxWindowID id)
+wxcd_collectionFrame::wxcd_collectionFrame(wxWindow* parent,wxWindowID id) : musThread(NULL)
 {
     //(*Initialize(wxcd_collectionFrame)
     wxBoxSizer* BoxSizer1;
@@ -106,9 +124,9 @@ wxcd_collectionFrame::wxcd_collectionFrame(wxWindow* parent,wxWindowID id)
     Create(parent, wxID_ANY, _("CD collection"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(872,450));
     {
-    	wxIcon FrameIcon;
-    	FrameIcon.CopyFromBitmap(wxBitmap(wxImage(_T("/home/anders/cprogr/wxcd_collection/classicmusic.png"))));
-    	SetIcon(FrameIcon);
+    wxIcon FrameIcon;
+    FrameIcon.CopyFromBitmap(wxBitmap(wxImage(_T("/home/anders/cprogr/wxcd_collection/classicmusic.png"))));
+    SetIcon(FrameIcon);
     }
     Notebook1 = new wxNotebook(this, ID_NOTEBOOK1, wxPoint(32,16), wxSize(328,18), 0, _T("ID_NOTEBOOK1"));
     Panel1 = new wxPanel(Notebook1, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
@@ -233,8 +251,10 @@ wxcd_collectionFrame::wxcd_collectionFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_MENUITEM1,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&wxcd_collectionFrame::OnMenuPlaySelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&wxcd_collectionFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&wxcd_collectionFrame::OnAbout);
+    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&wxcd_collectionFrame::OnClose);
     //*)
 
+    playing = false;
     editCDDialog = NULL;
     GetCDData();
     if (ListViewCD->GetItemCount() > 0) ListViewCD->Select(0);
@@ -244,7 +264,6 @@ wxcd_collectionFrame::wxcd_collectionFrame(wxWindow* parent,wxWindowID id)
     if (ListViewTypeOfMusic->GetItemCount() > 0) ListViewTypeOfMusic->Select(0);
     GetArtistData();
     if (ListViewArtists->GetItemCount() > 0) ListViewArtists->Select(0);
-
 }
 
 wxcd_collectionFrame::~wxcd_collectionFrame()
@@ -253,6 +272,7 @@ wxcd_collectionFrame::~wxcd_collectionFrame()
     //*)
 
     DataFactory::DestroyInstance();
+    PlayTheMusic::DestroyInstance();
 }
 
 void wxcd_collectionFrame::GetCDData()
@@ -691,6 +711,16 @@ void wxcd_collectionFrame::OnbtnUpdateCDTrackClick(wxCommandEvent& event)
 
 void wxcd_collectionFrame::OnMenuPlaySelected(wxCommandEvent& event)
 {
+	if (!playing)
+	{
+		playing = true;
+		musThread = new MusicThread(this);
+		musThread->Run();
+	}
+}
+
+void wxcd_collectionFrame::Play()
+{
    	const char *homedir;
 
 	if ((homedir = getenv("HOME")) == NULL)
@@ -705,27 +735,39 @@ void wxcd_collectionFrame::OnMenuPlaySelected(wxCommandEvent& event)
 	long sel = ListViewCD->GetFirstSelected();
 
 	if (sel != wxNOT_FOUND)
-    {
-        CDid = ListViewCD->GetItemData(sel);
+	{
+		CDid = ListViewCD->GetItemData(sel);
 
-        int icount = ListViewCDRecTracks->GetItemCount();
+		int icount = ListViewCDRecTracks->GetItemCount();
 
-        for (int c = 0; c < icount; c++)
-        {
-            int trackId = (long)ListViewCDRecTracks->GetItemData(c);
-            data.cdId = CDid;
-            data.trackId = trackId;
-            data.trackOnCD = c + 1;
-            if (DataFactory::Instance()->GetTrackOnCD(&data))
-            {
-                if (c > 0) ListViewCDRecTracks->Select(c - 1, false);
-                ListViewCDRecTracks->Select(c);
-                ListViewCDRecTracks->RefreshItem (c);
-                ListViewCDRecTracks->Refresh();
-                wxYield();
-                PlayTheMusic play;
-                play.Play((homefolder + _("/") + data.Path).mb_str(wxConvUTF8));
-            }
-        }
-    }
+		for (int c = 0; c < icount && playing; c++)
+		{
+			int trackId = (long)ListViewCDRecTracks->GetItemData(c);
+			data.cdId = CDid;
+			data.trackId = trackId;
+			data.trackOnCD = c + 1;
+			if (DataFactory::Instance()->GetTrackOnCD(&data))
+			{
+				if (c > 0) ListViewCDRecTracks->Select(c - 1, false);
+				ListViewCDRecTracks->Select(c);
+				ListViewCDRecTracks->RefreshItem (c);
+				ListViewCDRecTracks->Refresh();
+				wxYield();
+				PlayTheMusic::Instance()->Play((homefolder + _("/") + data.Path).mb_str(wxConvUTF8));
+			}
+		}
+	}
+
+	playing = false;
+	musThread = NULL;
+}
+
+void wxcd_collectionFrame::OnClose(wxCloseEvent& event)
+{
+	if (playing)
+	{
+		playing = false;
+		PlayTheMusic::Instance()->Stop();
+	}
+	Destroy();
 }
