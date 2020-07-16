@@ -253,6 +253,8 @@ bool DataFactory::AddTrackToCD(wxTrackOnCD *trOnCD)
 {
 	bool retval = false;
 
+	std::lock_guard<std::mutex> l(m);
+
     unique_ptr<CDRecTrack> cdrectrack(CDRecTrack::Instance());
 
     cdrectrack->SetCDId(trOnCD->cdId);
@@ -268,6 +270,8 @@ bool DataFactory::AddTrackToCD(wxTrackOnCD *trOnCD)
 bool DataFactory::UpdateTrackOnCD(wxTrackOnCD *oldValues, wxTrackOnCD *newValues)
 {
 	bool retval = false;
+
+	std::lock_guard<std::mutex> l(m);
 
     unique_ptr<CDRecTrack> cdrectrack(CDRecTrack::Instance());
 
@@ -291,6 +295,8 @@ bool DataFactory::GetTrackOnCD(wxTrackOnCD *data)
 {
 	bool retval = false;
 
+	std::lock_guard<std::mutex> l(m);
+
     unique_ptr<CDRecTrack> cdrectrack(CDRecTrack::Instance());
 
     cdrectrack->SetCDId(data->cdId);
@@ -311,6 +317,8 @@ bool DataFactory::GetTrackOnCD(wxTrackOnCD *data)
 bool DataFactory::DeleteTrackOnCD(const int CDid, const int NoOnCD, const int TRid)
 {
 	bool retval = false;
+
+	std::lock_guard<std::mutex> l(m);
 
     unique_ptr<CDRecTrack> cdrectrack(CDRecTrack::Instance());
 

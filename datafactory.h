@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <mutex>
 #include "btree.h"
 #include "artist.h"
 #include "cdrec.h"
@@ -96,6 +97,8 @@ class DataFactory
 		static DataFactory *Instance();
 		static void DestroyInstance();
 	protected:
+
+		mutable std::mutex m;
 
         std::vector<wxCDRec> cdrecords;
         std::vector<wxCDRecTrackRec> cdrectrackrecords;
