@@ -142,7 +142,7 @@ void ResetPos(DbFPtr db)
 static void GetRoot(DbFPtr db)
 {
     lseek(db->BtFd, 0, SEEK_SET);
-    if (read(db->BtFd, (void *) &db->Root, RootSize(db)) < RootSize(db))
+    if (read(db->BtFd, (void *) db, RootSize(db)) < RootSize(db))
     {
         BTCrash("Error: Unable to get root.");
     }
@@ -155,13 +155,13 @@ static void PutRoot(DbFPtr db)
     lseek(db->BtFd, 0, SEEK_SET);
     if (read(db->BtFd, (void *) temp, RootSize(db)) == RootSize(db))
     {
-        if ((memcmp((void *) &db->Root, temp, RootSize(db))) == 0)
+        if ((memcmp((void *) db, temp, RootSize(db))) == 0)
         {
             return;
         }
     }
     lseek(db->BtFd, 0L, SEEK_SET);
-    if (write(db->BtFd, (void *) &db->Root, RootSize(db)) != RootSize(db))
+    if (write(db->BtFd, (void *) db, RootSize(db)) != RootSize(db))
     {
         BTCrash("ERROR: PutRoot");
     }
