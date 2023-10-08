@@ -35,7 +35,7 @@ EditTrack::EditTrack(wxWindow* parent, wxCDTrack *data, wxWindowID id,const wxPo
 	wxFlexGridSizer* FlexGridSizer3;
 
 	Create(parent, id, _("Edit Track"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxTAB_TRAVERSAL, _T("id"));
-	SetClientSize(wxDefaultSize);
+	SetClientSize(wxSize(585,230));
 	Move(wxDefaultPosition);
 	FlexGridSizer1 = new wxFlexGridSizer(5, 2, 0, 0);
 	FlexGridSizer1->AddGrowableRow(1);
@@ -77,8 +77,8 @@ EditTrack::EditTrack(wxWindow* parent, wxCDTrack *data, wxWindowID id,const wxPo
 	BoxSizer1->Add(btnCancel, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	FlexGridSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
-	FlexGridSizer1->Fit(this);
-	FlexGridSizer1->SetSizeHints(this);
+	SetSizer(FlexGridSizer1);
+	Layout();
 
 	Connect(ID_CHOICE2,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&EditTrack::OnChoiceArtistsSelect);
 	Connect(ID_CHOICE1,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&EditTrack::OnChoiceTypeOfMusicsSelect);
