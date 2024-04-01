@@ -907,9 +907,8 @@ BTREE_BOOL GetRecord(DbFPtr db, char *data)
 {
     PAGEPTR    page;
     DATAREC    datarec;
-    DATAREC    *dr;
     BTREE_BOOL found;
-    uint16_t      slot;
+    uint16_t   slot;
 
     if (db->Root == 0)
     {
@@ -930,7 +929,7 @@ BTREE_BOOL GetRecord(DbFPtr db, char *data)
 
         if (slot > 0)
         {
-            dr = GetDataRecFromPage(db, page, slot - 1);
+            DATAREC *dr = GetDataRecFromPage(db, page, slot - 1);
             db->PagePath[db->PP].Ref = dr->ChildRec;
             page = GetPage(db, dr->ChildRec);
         }
@@ -968,7 +967,6 @@ BTREE_BOOL NextRecord(DbFPtr db, char *data)
 {
     int32_t    Ref;
     PAGEPTR    PagPtr;
-    DATAREC    *dr;
     BTREE_BOOL found = NO;
 
     if (db->Root == 0)
@@ -985,7 +983,7 @@ BTREE_BOOL NextRecord(DbFPtr db, char *data)
         PagPtr = GetPage(db, db->PagePath[db->PP].Ref);
         if (db->PagePath[db->PP].Pos > 0)
         {
-            dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
+            DATAREC *dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
             Ref = dr->ChildRec;
         }
         else
@@ -1011,7 +1009,7 @@ BTREE_BOOL NextRecord(DbFPtr db, char *data)
         }
         if (db->PagePath[db->PP].Pos < PagPtr->Count)
         {
-            dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos);
+            DATAREC *dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos);
             memcpy(data, dr->Data, db->RecLen);
             db->PagePath[db->PP].Pos++;
             found = YES;
@@ -1029,7 +1027,6 @@ BTREE_BOOL PrevRecord(DbFPtr db, char *data)
 {
     int32_t    Ref;
     PAGEPTR    PagPtr;
-    DATAREC    *dr;
     BTREE_BOOL found = NO;
 
     if (db->Root == 0)
@@ -1046,7 +1043,7 @@ BTREE_BOOL PrevRecord(DbFPtr db, char *data)
         db->PagePath[db->PP].Pos--;
         if (db->PagePath[db->PP].Pos > 0)
         {
-            dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
+            DATAREC *dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
             Ref = dr->ChildRec;
         }
         else
@@ -1060,7 +1057,7 @@ BTREE_BOOL PrevRecord(DbFPtr db, char *data)
         db->PP++;
         db->PagePath[db->PP].Ref = Ref;
         db->PagePath[db->PP].Pos = PagPtr->Count;
-        dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
+        DATAREC *dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
         Ref = dr->ChildRec;
     }
     if (db->PP != 0)
@@ -1072,7 +1069,7 @@ BTREE_BOOL PrevRecord(DbFPtr db, char *data)
         }
         if (db->PagePath[db->PP].Pos > 0)
         {
-            dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
+            DATAREC *dr = GetDataRecFromPage(db, PagPtr, db->PagePath[db->PP].Pos - 1);
             memcpy(data, dr->Data, db->RecLen);
             found = YES;
         }
